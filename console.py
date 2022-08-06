@@ -16,9 +16,9 @@ from models.user import User
 class HBNBCommand(cmd.Cmd):
     """ Command line interpreter """
     prompt = "(hbnb) "
-    __my_cls_dict =  {"Amenity": Amenity, "BaseModel": BaseModel,
-                  "City": City, "Place": Place, "Review": Review,
-                  "State": State, "User": User}
+    __my_cls_dict = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+                     "Place": Place, "Review": Review, "State": State,
+                     "User": User}
     __file_path = "file.json"
 
     def do_quit(self, arg):
