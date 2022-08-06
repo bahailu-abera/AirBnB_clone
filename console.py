@@ -32,6 +32,9 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         return False
 
+    def default(self, arg):
+        pass
+
     def do_create(self, arg):
         """ Creates a new instance of BaseModel """
         if not arg:
