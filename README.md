@@ -1,6 +1,7 @@
 # AirBnB_clone - Console that's in charge of managing the models in a common AirBnB application.
 
 ### File Structure of the project
+
 AirBnB/
 	AUTHORS
 	console.py
@@ -56,7 +57,7 @@ or
 | create | Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id. EX: $ create BaseModel
 | show | Prints the string representation of an instance based on the class name and id. Ex: $ show BaseModel 1234-1234-1234|
 | all | Prints all string representation of all instances based or not on the class name. Ex: $ all BaseModel|
-| update | Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). Ex: $ update BaseModel 1234-1234-1234 email "aibnb@holbertonschool.com"|
+| update | Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). Ex: $ update BaseModel 1234-1234-1234 email "aibnb@alx.com"|
 
 # Normal Command Input
 | Command                     | Example
@@ -108,6 +109,5 @@ For a list of usable commands, to exit press Ctrl+D or type the command quit.
 The console can also be used in non-interactive mode:
 
     	    $ echo "create User" | ./console.py
-
 	    $ echo "help" | ./console.py
 The program will create a file called: file.json whenever you create a new model, it'll be store in the top folder.i.e AirBnB_clone/file.json
