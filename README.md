@@ -2,7 +2,7 @@
 
 ### File Structure of the project
 
-AirBnB/
+## AirBnB/
 	AUTHORS
 	console.py
 	models/
@@ -43,9 +43,8 @@ To have access to the console use the following command:
 
 # Run
 	python3 console.py
-
-or
-	./console.py
+	or
+	/console.py
 
 # Testing
 	Python3 -m unittest discover tests
@@ -94,20 +93,22 @@ or
    	       $ ./console.py
 Now you are on interactive mode and you will see the prompt (hbnb) input a command:
 
-    	       (hbnb) create User
+	(hbnb) create User
+
 the id of the created model will be visible in the standard output, if you do:
 
-       	       (hbnb) show User [id]
+       	(hbnb) show User [id]
+
 All the attributes of the created model will be in your screen.
 
 use:
 
 	(hbnb) help
+
 For a list of usable commands, to exit press Ctrl+D or type the command quit.
 
 ## Non-Interactive Mode
 The console can also be used in non-interactive mode:
-
-    	    $ echo "create User" | ./console.py
-	    $ echo "help" | ./console.py
+	$ echo "create User" | ./console.py
+	$ echo "help" | ./console.py
 The program will create a file called: file.json whenever you create a new model, it'll be store in the top folder.i.e AirBnB_clone/file.json
