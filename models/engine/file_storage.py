@@ -14,7 +14,7 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self, obj):
-        """ Creates a new objectn """
+        """ Creates a new object """
         class_name = type(obj).__name__
         my_id = obj.id
         key = class_name + "." + my_id
@@ -32,8 +32,16 @@ class FileStorage:
 
     def reload(self):
         """ Loads from json file """
+        from models.amenity import Amenity
         from models.base_model import BaseModel
-        my_cls_dict = {"BaseModel" : BaseModel}
+        from models.city import City
+        from models.place import Place
+        from models.review import Review
+        from models.state import State
+        from models.user import User
+        cls_dict = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+                    "Place": Place, "Review": Review, "State": State,
+                    "User": User}
         if not os.path.isfile(FileStorage.__file_path):
             return
 
@@ -44,4 +52,4 @@ class FileStorage:
             for key in objects:
                 cls_name = key.split('.')[0]
                 obj_dict = objects[key]
-                FileStorage.__objects[key] = my_cls_dict[cls_name](**obj_dict)
+                FileStorage.__objects[key] = cls_dict[cls_name](**obj_dict)
