@@ -2,15 +2,23 @@
 """
  Module for the entry point of the command line interpreter
 """
+from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.city import City
 import cmd
+from models.place import Place
+from models.review import Review
+from models.state import State
 from models import storage
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
     """ Command line interpreter """
     prompt = "(hbnb) "
-    __my_cls_dict = {'BaseModel': BaseModel}
+    __my_cls_dict =  {"Amenity": Amenity, "BaseModel": BaseModel,
+                  "City": City, "Place": Place, "Review": Review,
+                  "State": State, "User": User}
     __file_path = "file.json"
 
     def do_quit(self, arg):
