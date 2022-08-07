@@ -32,8 +32,35 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         return False
 
+    @staticmethod
+    def parse_optional_cmd(arg):
+        """ parse optional command and return tuple
+        of class name command and parameter
+        """
+        args = parse(arg)
+        opt_cmd = args[0].split('.')
+        cls_name = opt_cmd[0]
+        cmd_par = opt_cmd[1].split('(')
+        cmd = cmd_par[0]
+        par = cmd_par[1].strip(')')
+        par = par.strip('"')
+        return (cls_name, cmd, par)
+
     def default(self, arg):
-        pass
+        method_dict = {
+            "all": self.do_all,
+            "count": self.count,
+            "destroy": self.do_destroy,
+            "show": self.do_show,
+            "update": self.do_update}
+
+        cls_name, cmd, par = self.parse_optional_cmd(arg)
+        args = cls_name + " " + par
+
+        if par:
+            method_dict[cmd](args)
+        else:
+            method_dict[cmd](cls_name)
 
     def do_create(self, arg):
         """ Creates a new instance of BaseModel """
@@ -95,23 +122,34 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** instance id missing **")
 
-    def do_all(self, arg):
-        """ Prints all string representation of all instances
-        based or not on the class name
-        """
+    @staticmethod
+    def all_cls_instances(cls):
+        """ Returns list of all instances of a class """
         all_objs = storage.all()
         lst_objs = []
         for obj_id in all_objs.keys():
             obj = all_objs[obj_id]
             str_obj = str(obj)
             cls_name = str_obj.split(']')[0][1:]
-            if not arg or cls_name == arg:
+            if cls is None or cls_name == cls:
                 lst_objs.append(str_obj)
+        return lst_objs
 
-        if arg and len(lst_objs) == 0:
-            print("** class doesn't exist **")
+    def do_all(self, arg):
+        """ Prints all string representation of all instances
+        based or not on the class name
+        """
+        all_objs = storage.all()
+        lst_objs = []
+        if not arg:
+            lst_objs = self.all_cls_instances(None)
         else:
+            lst_objs = self.all_cls_instances(arg)
+
+        if lst_objs:
             print(lst_objs)
+        else:
+            print("** class doesn't exist **")
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id
@@ -148,6 +186,15 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
         else:
             print("** instance id missing **")
+
+    def count(self, arg):
+        """ prints number of a class in the storage engine """
+        lst_objs = []
+        if arg:
+            lst_objs = self.all_cls_instances(arg)
+        else:
+            lst_objs = self.all_cls_instances(None)
+        print(len(lst_objs))
 
 
 def parse(arg):
