@@ -33,18 +33,43 @@ class HBNBCommand(cmd.Cmd):
         return False
 
     @staticmethod
+    def update_from_dict(arg):
+        """ parse update from dict """
+        import json
+        try:
+            opt_cmd = arg.split('.')
+            cls_name = opt_cmd[0]
+            cmd_par = opt_cmd[1]
+            cmd_par = cmd_par.split('(')
+            cmd = cmd_par[0]
+            id_par = cmd_par[1].split('{')
+            cls_id = id_par[0].strip(' ,"')
+            par = '{' + id_par[1]
+            par = par.strip(')')
+            par = par.replace("'", '"')
+            par = json.loads(par)
+            return (cls_name, cmd, cls_id, par)
+        except IndexError:
+            return (None, arg, None, None)
+
+    @staticmethod
     def parse_optional_cmd(arg):
         """ parse optional command and return tuple
         of class name command and parameter
         """
-        args = parse(arg)
-        opt_cmd = args[0].split('.')
-        cls_name = opt_cmd[0]
-        cmd_par = opt_cmd[1].split('(')
-        cmd = cmd_par[0]
-        par = cmd_par[1].strip(')')
-        par = par.strip('"')
-        return (cls_name, cmd, par)
+        try:
+            opt_cmd = arg.split('.')
+            cls_name = opt_cmd[0]
+            cmd_par = opt_cmd[1].split('(')
+            cmd = cmd_par[0]
+            parameter = ""
+            for par in cmd_par[1].split(" "):
+                parameter += par.strip(',")')
+                parameter += " "
+            parameter = parameter.strip()
+            return (cls_name, cmd, parameter)
+        except IndexError:
+            return (None, arg, None)
 
     def default(self, arg):
         method_dict = {
@@ -53,14 +78,27 @@ class HBNBCommand(cmd.Cmd):
             "destroy": self.do_destroy,
             "show": self.do_show,
             "update": self.do_update}
+        cls_name, cmd, par = None, None, None
 
-        cls_name, cmd, par = self.parse_optional_cmd(arg)
-        args = cls_name + " " + par
-
-        if par:
-            method_dict[cmd](args)
+        if '{' in arg and 'update' in arg:
+            cls_name, cmd, cls_id, par = self.update_from_dict(arg)
         else:
-            method_dict[cmd](cls_name)
+            cls_name, cmd, par = self.parse_optional_cmd(arg)
+
+        if cmd not in method_dict.keys():
+            print("** unknown command {} **".format(cmd))
+            return False
+        if type(par) == dict:
+            for attr_name, attr_value in par.items():
+                args = "{} {} {} {}".format(cls_name, cls_id, attr_name,
+                                            attr_value)
+                method_dict[cmd](args)
+        else:
+            args = cls_name + " " + par
+            if par:
+                method_dict[cmd](args)
+            else:
+                method_dict[cmd](cls_name)
 
     def do_create(self, arg):
         """ Creates a new instance of BaseModel """
