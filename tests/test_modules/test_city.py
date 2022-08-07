@@ -3,6 +3,7 @@
 from models import city
 from models.city import City
 from models.base_model import BaseModel
+import pep8
 import unittest
 
 
@@ -30,6 +31,15 @@ class TestCityMethods(unittest.TestCase):
         """ check for method documentation """
         for func in dir(City):
             self.assertTrue(len(func.__doc__) > 0)
+
+     def test_pep8(self):
+        """ test base and test_base for pep8 conformance """
+        style = pep8.StyleGuide(quiet=True)
+        file1 = 'models/city.py'
+        file2 = 'tests/test_models/test_city.py'
+        result = style.check_files([file1, file2])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warning).")
 
     def test_is_instance(self):
         """ Test if user is instance of basemodel """

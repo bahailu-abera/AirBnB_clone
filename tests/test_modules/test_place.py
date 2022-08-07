@@ -2,8 +2,7 @@
 """Unit test for the class Place
 """
 import unittest
-# import json
-# import pep8
+import pep8
 from models import place
 from models.place import Place
 from models.base_model import BaseModel
@@ -44,14 +43,14 @@ class TestPlaceClass(unittest.TestCase):
         for func in dir(Place):
             self.assertTrue(len(func.__doc__) > 0)
 
-    # def test_pep8(self):
-    #     """ test base and test_base for pep8 conformance """
-    #     style = pep8.StyleGuide(quiet=True)
-    #     file1 = 'models/place.py'
-    #     file2 = 'tests/test_models/test_place.py'
-    #     result = style.check_files([file1, file2])
-    #     self.assertEqual(result.total_errors, 0,
-    #                      "Found code style errors (and warning).")
+    def test_pep8(self):
+        """ test base and test_base for pep8 conformance """
+        style = pep8.StyleGuide(quiet=True)
+        file1 = 'models/place.py'
+        file2 = 'tests/test_models/test_place.py'
+        result = style.check_files([file1, file2])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warning).")
 
     def test_is_instance(self):
         """ Test if user is instance of basemodel """
