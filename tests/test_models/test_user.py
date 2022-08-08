@@ -36,15 +36,6 @@ class TestUserClass(unittest.TestCase):
         for func in dir(User):
             self.assertTrue(len(func.__doc__) > 0)
 
-    # def test_pep8(self):
-    #     """ test base and test_base for pep8 conformance """
-    #     style = pep8.StyleGuide(quiet=True)
-    #     file1 = 'models/user.py'
-    #     file2 = 'tests/test_models/test_user.py'
-    #     result = style.check_files([file1, file2])
-    #     self.assertEqual(result.total_errors, 0,
-    #                      "Found code style errors (and warning).")
-
     def test_is_instance(self):
         """ Test if user is instance of basemodel """
         my_user = User()
@@ -57,6 +48,16 @@ class TestUserClass(unittest.TestCase):
         self.assertTrue(type(my_user.password) == str)
         self.assertTrue(type(my_user.first_name) == str)
         self.assertTrue(type(my_user.last_name) == str)
+
+    def test_email(self):
+        """ test user email """
+        email = "user@gmail.com"
+        User.email = email
+        user1 = User()
+        user2 = User()
+        self.assertEqual(User.email, email)
+        self.assertEqual(user1.email, User.email)
+        self.assertEqual(user2.email, User.email)
 
 
 if __name__ == '__main__':
