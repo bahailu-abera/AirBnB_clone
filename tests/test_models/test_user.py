@@ -2,7 +2,6 @@
 """Unit test for the file storage class
 """
 import unittest
-# import pep8
 from models import user
 from models.user import User
 from models.base_model import BaseModel
@@ -50,14 +49,10 @@ class TestUserClass(unittest.TestCase):
         self.assertTrue(type(my_user.last_name) == str)
 
     def test_email(self):
-        """ test user email """
-        email = "user@gmail.com"
-        User.email = email
-        user1 = User()
-        user2 = User()
-        self.assertEqual(User.email, email)
-        self.assertEqual(user1.email, User.email)
-        self.assertEqual(user2.email, User.email)
+        """ test that user has attr email, and it's an empty string"""
+        user = User()
+        self.assertTrue(hasattr(user, "email"))
+        self.assertEqual(user.email, "")
 
 
 if __name__ == '__main__':
