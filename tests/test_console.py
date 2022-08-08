@@ -439,5 +439,6 @@ class TestConsoleClass(unittest.TestCase):
             HBNBCommand().onecmd("User.show(\"" + user_id + "\")")
             self.assertTrue("John" in val.getvalue())
 
+
 if __name__ == '__main__':
     unittest.main()
