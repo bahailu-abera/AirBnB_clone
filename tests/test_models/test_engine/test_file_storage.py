@@ -60,7 +60,7 @@ class TestFileStorageClass(unittest.TestCase):
         key = "{}.{}".format(type(new_obj).__name__, new_obj.id)
         self.assertTrue(key in my_dict)
 
-    def test_empty_reload(self):
+    def test_reload(self):
         """ Empty reload function """
         my_obj = FileStorage()
         new_obj = BaseModel()
